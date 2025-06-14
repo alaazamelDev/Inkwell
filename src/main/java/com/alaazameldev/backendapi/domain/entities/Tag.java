@@ -33,6 +33,7 @@ public class Tag {
   @Column(nullable = false, unique = true)
   private String name;
 
+  @Builder.Default
   @ManyToMany(mappedBy = "tags")
   private Set<Post> posts = new HashSet<>();
 
