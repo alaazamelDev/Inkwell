@@ -7,8 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
-
+@Service
 @RequiredArgsConstructor
 public class BlogUserDetailsService implements UserDetailsService {
 
@@ -21,7 +22,6 @@ public class BlogUserDetailsService implements UserDetailsService {
     User user = repository.findByEmail(email)
         .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
-    //
     return new BlogUserDetails(user);
   }
 }
