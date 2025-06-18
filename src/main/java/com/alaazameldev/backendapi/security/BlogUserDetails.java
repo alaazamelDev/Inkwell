@@ -3,6 +3,7 @@ package com.alaazameldev.backendapi.security;
 import com.alaazameldev.backendapi.domain.entities.User;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -48,5 +49,9 @@ public class BlogUserDetails implements UserDetails {
   @Override
   public boolean isEnabled() {
     return true;
+  }
+
+  public UUID getId() {
+    return user.getId();
   }
 }
