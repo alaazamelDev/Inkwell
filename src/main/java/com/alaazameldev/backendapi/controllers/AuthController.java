@@ -18,7 +18,7 @@ public class AuthController {
 
   private final AuthenticationService authService;
 
-  @PostMapping
+  @PostMapping(path = "/login")
   public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
 
     // authenticate first
