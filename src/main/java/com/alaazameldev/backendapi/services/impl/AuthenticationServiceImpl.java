@@ -1,12 +1,15 @@
 package com.alaazameldev.backendapi.services.impl;
 
 import com.alaazameldev.backendapi.services.AuthenticationService;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -49,6 +52,22 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         .expiration(new Date(System.currentTimeMillis() + jwtExpiryInMs))
         .signWith(getSigningKey())
         .compact();
+  }
+
+  @Override
+  public UserDetails validateToken(String token) {
+    String extractUsername = extractUsername(token);
+    return userDetailsService.loadUserByUsername(extractUsername);
+  }
+
+  private String extractUsername(String token) {
+
+    Claims claims = Jwts.parser()
+        .setSigningKey(getSigningKey())
+        .build()
+        .parseClaimsJwt(token)
+        .getBody();
+    return claims.getSubject();
   }
 
   private Key getSigningKey() {
