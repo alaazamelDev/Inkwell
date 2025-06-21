@@ -55,9 +55,10 @@ public class SecurityConfig {
         .sessionManagement(ses -> ses.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(requests -> requests
             .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/v1/posts/drafts").authenticated()
+            .requestMatchers(HttpMethod.GET, "/api/v1/posts/**").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/v1/tags/**").permitAll()
-            .requestMatchers(HttpMethod.GET, "/api/v1/posts/**").permitAll()
 
             .anyRequest().authenticated() // 3. Require authentication for all other requests
         ).addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);

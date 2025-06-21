@@ -3,6 +3,7 @@ package com.alaazameldev.backendapi.services.impl;
 import com.alaazameldev.backendapi.domain.entities.Category;
 import com.alaazameldev.backendapi.domain.entities.Post;
 import com.alaazameldev.backendapi.domain.entities.Tag;
+import com.alaazameldev.backendapi.domain.entities.User;
 import com.alaazameldev.backendapi.domain.enums.PostStatus;
 import com.alaazameldev.backendapi.repositories.PostRepository;
 import com.alaazameldev.backendapi.services.CategoryService;
@@ -48,5 +49,10 @@ public class PostServiceImpl implements PostService {
     }
 
     return repository.findAllByStatus(PostStatus.PUBLISHED);
+  }
+
+  @Override
+  public List<Post> getDraftPosts(User user) {
+    return repository.findAllByAuthorAndStatus(user,PostStatus.DRAFT);
   }
 }
