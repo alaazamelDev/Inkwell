@@ -50,6 +50,6 @@ public class CategoryController {
   @DeleteMapping(path = "/{id}")
   public ResponseEntity<Void> deleteCategory(@PathVariable("id") UUID id) {
     service.deleteCategory(id);
-    return null;
+    return ResponseEntity.noContent().build();
   }
 }
