@@ -4,6 +4,6 @@ import java.util.UUID;
 import lombok.Builder;
 
 @Builder
-public record CategoryDto(UUID id, String name, Integer postsCount) {
+public record CategoryDto(UUID id, String name, Integer postCount) {
 
 }

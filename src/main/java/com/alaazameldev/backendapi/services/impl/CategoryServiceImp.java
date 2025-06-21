@@ -4,6 +4,7 @@ import com.alaazameldev.backendapi.domain.entities.Category;
 import com.alaazameldev.backendapi.exceptions.NotFoundException;
 import com.alaazameldev.backendapi.repositories.CategoryRepository;
 import com.alaazameldev.backendapi.services.CategoryService;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,12 @@ import org.springframework.stereotype.Service;
 public class CategoryServiceImp implements CategoryService {
 
   private final CategoryRepository repository;
+
+  @Override
+  public Category getCategoryById(UUID id) {
+    return repository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Category not found with ID : " + id));
+  }
 
   @Override
   public List<Category> listCategories() {

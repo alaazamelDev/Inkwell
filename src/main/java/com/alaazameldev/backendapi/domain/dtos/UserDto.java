@@ -1,11 +1,12 @@
 package com.alaazameldev.backendapi.domain.dtos;
 
 import java.util.UUID;
+import lombok.Builder;
 
-public record TagDto(
+@Builder
+public record UserDto(
     UUID id,
-    String name,
-    Integer postCount
+    String name
 ) {
 
 }

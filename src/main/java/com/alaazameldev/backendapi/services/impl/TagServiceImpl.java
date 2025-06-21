@@ -4,6 +4,7 @@ import com.alaazameldev.backendapi.domain.entities.Tag;
 import com.alaazameldev.backendapi.exceptions.NotFoundException;
 import com.alaazameldev.backendapi.repositories.TagRepository;
 import com.alaazameldev.backendapi.services.TagService;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -18,6 +19,12 @@ import org.springframework.stereotype.Service;
 public class TagServiceImpl implements TagService {
 
   private final TagRepository repository;
+
+  @Override
+  public Tag getTagById(UUID id) {
+    return repository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Tag not found with ID : " + id));
+  }
 
   @Override
   public List<Tag> listTags() {
@@ -55,7 +62,7 @@ public class TagServiceImpl implements TagService {
     Tag tag = repository.findById(id)
         .orElseThrow(() -> new NotFoundException("Tag not found with ID: " + id));
 
-    if (!tag.getPosts().isEmpty()){
+    if (!tag.getPosts().isEmpty()) {
       throw new IllegalArgumentException("Tag has posts associated with it");
     }
 

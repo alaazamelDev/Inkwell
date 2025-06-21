@@ -15,7 +15,7 @@ import org.mapstruct.ReportingPolicy;
 public interface CategoryMapper {
 
   @Mapping(
-      target = "postsCount",
+      target = "postCount",
       source = "posts",
       qualifiedByName = "calculatePostCount"
   )

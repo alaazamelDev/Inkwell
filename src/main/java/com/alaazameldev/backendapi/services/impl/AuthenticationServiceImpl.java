@@ -8,6 +8,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javax.crypto.SecretKey;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -61,14 +62,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   private String extractUsername(String token) {
 
     Claims claims = Jwts.parser()
-        .setSigningKey(getSigningKey())
+        .verifyWith(getSigningKey())
         .build()
-        .parseClaimsJwt(token)
-        .getBody();
+        .parseSignedClaims(token)
+        .getPayload();
     return claims.getSubject();
   }
 
-  private Key getSigningKey() {
+  private SecretKey getSigningKey() {
     byte[] keyBytes = jwtSecretKey.getBytes();
     return Keys.hmacShaKeyFor(keyBytes);
   }

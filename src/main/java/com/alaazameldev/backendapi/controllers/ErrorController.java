@@ -2,6 +2,7 @@ package com.alaazameldev.backendapi.controllers;
 
 import com.alaazameldev.backendapi.domain.ApiErrorResponse;
 import com.alaazameldev.backendapi.exceptions.NotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +52,8 @@ public class ErrorController {
   }
 
   @ExceptionHandler(BadCredentialsException.class)
-  public ResponseEntity<ApiErrorResponse> handleBadCredentialsException(BadCredentialsException ex) {
+  public ResponseEntity<ApiErrorResponse> handleBadCredentialsException(
+      BadCredentialsException ex) {
 
     log.info("Failed Login Attempt", ex);
 
@@ -61,5 +63,20 @@ public class ErrorController {
         .build();
 
     return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+  }
+
+  @ExceptionHandler(EntityNotFoundException.class)
+  public ResponseEntity<ApiErrorResponse> handleEntityNotFoundException(
+      EntityNotFoundException ex
+  ) {
+
+    log.info("Caught Entity NotFound Exception", ex);
+
+    ApiErrorResponse error = ApiErrorResponse.builder()
+        .status(HttpStatus.NOT_FOUND.value())
+        .message(ex.getMessage())
+        .build();
+
+    return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
   }
 }

@@ -15,7 +15,7 @@ public interface TagMapper {
 
   @Mapping(
       source = "posts",
-      target = "postsCount",
+      target = "postCount",
       qualifiedByName = "calculatePostCount"
   )
   TagDto toDto(Tag tag);
