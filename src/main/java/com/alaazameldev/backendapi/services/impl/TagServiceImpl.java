@@ -68,4 +68,14 @@ public class TagServiceImpl implements TagService {
 
     repository.deleteById(id);
   }
+
+  @Override
+  public List<Tag> getTagsByIds(Set<UUID> ids) {
+    List<Tag> tags = repository.findAllById(ids);
+
+    if (tags.size() != ids.size()) {
+      throw new EntityNotFoundException("Not all specified tag IDs exist");
+    }
+    return tags;
+  }
 }
