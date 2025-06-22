@@ -18,4 +18,6 @@ public interface PostService {
   Post createPost(User user, CreatePostDto postDto);
 
   Post updatePost(UUID id, UpdatePostDto postDto);
+
+  void deletePost(UUID id);
 }
